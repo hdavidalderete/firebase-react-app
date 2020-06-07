@@ -19,14 +19,14 @@ export function watcherUserChange(callback) {
 
 export function watchExpenses(callback) {
 
-    const unsub = db
+    db
         .collection('expenses')
-        .onSnapshot( (snapshot) => {
+        .onSnapshot((snapshot) => {
             const docs = [];
             snapshot.forEach((expense) => {
                 const data = expense.data();
-                docs.push({...data, id: expense.id});
+                docs.push({ ...data, id: expense.id });
             })
-            callback(docs);    
+            callback(docs);
         });
 }
