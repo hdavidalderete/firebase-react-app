@@ -7,9 +7,7 @@ export class ExpenseContextProvider extends React.Component {
     constructor() {
         super()
         this.state = {
-            isLoggedIn: false,
             expenses: [],
-            expenseReady: false
         }
     }
 
