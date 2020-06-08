@@ -16,6 +16,7 @@ export async function deleteExpense(id) {
 
 
 export async function updateExpense(id, data) {
+    console.log(id)
     return await db
         .collection('expenses')
         .doc(id)

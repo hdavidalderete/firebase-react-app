@@ -3,21 +3,26 @@ import { ExpenseContext } from '../../context/expenses';
 import Layout from '../../components/layout';
 import style from './style.module.scss';
 import moment from 'moment';
-import Expense from './expense';
+import Expense from '../expense';
+
 class Dashboard extends React.Component {
     constructor() {
         super()
         this.state = {
-            expenseId: null
+            expenseId: null,
+            isOpen: false
         }
     }
     render() {
         const { expenses } = this.context;
-        const { expenseId } = this.state;
+        const { expenseId, isOpen } = this.state;
         const expense = expenses.find(expense => expense.id === expenseId)
         return (
             <Layout>
                 <div className={style.container}>
+                    <div className={style.buttonFloat}
+                    onClick={() => this.setState({isOpen: true})}
+                    >+</div>
                     <table className={style.table} cellPadding='0'>
                         <thead>
                             <tr className={style.tableHeader}>
@@ -33,7 +38,7 @@ class Dashboard extends React.Component {
                                     <tr
                                         key={row.id}
                                         className={style.tableRow}
-                                        onClick={() => this.setState({ expenseId: row.id })}>
+                                        onClick={() => this.setState({ expenseId: row.id, isOpen: true })}>
                                         <td>{moment(row.date).format('DD MMM YYYY hh:mm a')}</td>
                                         <td>{row.type}</td>
                                         <td>{row.amount}</td>
@@ -44,12 +49,13 @@ class Dashboard extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                {expense &&
+                {isOpen &&
                     <Expense
                         expense={expense}
-                        onClose={() => this.setState({ expenseId: null })}>
+                        onClose={() => this.setState({ expenseId: null, isOpen: false })}>
                     </Expense>
                 }
+
             </Layout>
         )
     }
